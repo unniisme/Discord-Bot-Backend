@@ -12,6 +12,9 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 async def send_message(message, user_message: str):
+    """
+    replies to user command
+    """
     try:
         response = handler.QueryHandler.ans_query(user_message)
 
@@ -21,6 +24,9 @@ async def send_message(message, user_message: str):
         print(e)
 
 def run_discord_bot():
+    """
+    main function which runs the bot
+    """
     client = discord.Client(intents=intents)
 
     @client.event
