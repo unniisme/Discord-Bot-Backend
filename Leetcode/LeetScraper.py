@@ -65,26 +65,38 @@ def Get_Answers():
     #The part responsible for answers in solution page
     button=driver.find_elements(by=By.XPATH,value="//*[@class='relative cursor-pointer px-3 py-3 text-label-4 dark:text-dark-label-4 hover:text-label-1 dark:hover:text-dark-label-1 EoHqa']")
     for element in button:
-            print('Clicking the button')
+            # print('Clicking the button')
             element.click()
             time.sleep(2)
     
     for j in Languages: 
         code=driver.find_elements(by=By.XPATH,value=f"//code[@class='{j}']")
+        
+        print("\n\n")
+        print(f"--------------{j}--------------\n")
+        for i in code:
+            print(i.get_attribute("innerText"))
+            print("\n")
+        '''
         with open('Answers.txt','a') as file:
             file.write("\n\n")
-            file.write(f"-----------{j}-----------------\n")
+            file.write(f"--------------{j}--------------\n")
             for i in code:
                 file.write(i.get_attribute("innerText"))
                 file.write("\n")
+        '''
 
 def Get_Question():
     """It scrapes the question from the problem's page"""
     time.sleep(5)
     element= driver.find_element(by=By.XPATH,value="//div[@data-track-load='description_content']")
+    print(element.get_attribute('innerText'))
+    
+    '''
     with open('Questions.txt','a',encoding='utf-8') as file:
         file.write(element.get_attribute('innerText'))
         file.write('\n')
+    '''
 
 def Get_Urls():
     """It returns all the urls for questions on any page that groups together questions eg "Arrays"""
@@ -101,13 +113,18 @@ def Get_Urls():
     
     return cleaned_title
 
+def get_questions_for_tags (tag : str):
+    driver.get(f"https://leetcode.com/tag/{tag}") #Replace the url with the url of the group of questions needed to be scraped
+    time.sleep(5)
+    cleaned_title = Get_Urls()
+
+    return cleaned_title    
+
+def get_questions_for_company (company: str): 
+    driver.get(f"https://leetcode.com/company/{company}") #Replace the url with the url of the group of questions needed to be scraped
+    time.sleep(5)
+    cleaned_title = Get_Urls()
+
+    return cleaned_title
 
 Login()
-driver.get("https://leetcode.com/tag/counting-sort/") #Replace the url with the url of the group of questions needed to be scraped
-time.sleep(5)
-cleaned_title = Get_Urls()
-for url in cleaned_title:
-    driver.get(url)
-    Get_Question()
-    Get_Answers()
-    time.sleep(2)
