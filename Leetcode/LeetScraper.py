@@ -25,12 +25,13 @@ def Login():
     time.sleep(5)
 
 
-def Get_Answers():
+def Get_Answers(url:str) -> str:
     """ Will Scrape the solution from any question url
      By clicking on the solutions tab and then clicking on the very first solution.
       It understands which languages to scrape by scraping the code boxes written on 
       the solutions tab and based on that it decides which class to scrape from """
     #Click on solution tab
+    driver.get(url)
     time.sleep(5)
     element = driver.find_element(by=By.XPATH,value="//div[@class='normal absolute left-0 top-0 whitespace-nowrap font-normal' and text()='Solutions']")
     element.click()
@@ -69,28 +70,34 @@ def Get_Answers():
             element.click()
             time.sleep(2)
     
+
+    return_str = ""
+
     for j in Languages: 
         code=driver.find_elements(by=By.XPATH,value=f"//code[@class='{j}']")
         
-        print("\n\n")
-        print(f"--------------{j}--------------\n")
+        return_str += "\n\n"
+        return_str += f"--------------{j}--------------\n"
         for i in code:
-            print(i.get_attribute("innerText"))
-            print("\n")
-        '''
-        with open('Answers.txt','a') as file:
-            file.write("\n\n")
-            file.write(f"--------------{j}--------------\n")
-            for i in code:
-                file.write(i.get_attribute("innerText"))
-                file.write("\n")
-        '''
+            return_str += i.get_attribute("innerText")
+            return_str += "\n"
+    
+    return return_str
+    '''
+    with open('Answers.txt','a') as file:
+        file.write("\n\n")
+        file.write(f"--------------{j}--------------\n")
+        for i in code:
+            file.write(i.get_attribute("innerText"))
+            file.write("\n")
+    '''
 
-def Get_Question():
+def Get_Question(url : str) -> str:
     """It scrapes the question from the problem's page"""
+    driver.get(url)
     time.sleep(5)
     element= driver.find_element(by=By.XPATH,value="//div[@data-track-load='description_content']")
-    print(element.get_attribute('innerText'))
+    return element.get_attribute('innerText')
     
     '''
     with open('Questions.txt','a',encoding='utf-8') as file:
