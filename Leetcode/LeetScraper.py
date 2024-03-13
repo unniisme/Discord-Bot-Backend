@@ -1,15 +1,15 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import time
 import settings
-from selenium.webdriver.chrome.options import Options
 import undetected_chromedriver as uc
 
+#Shows the path where chromedriver is installed
 s= Service('chromedriver.exe')
 driver=uc.Chrome()
 
 def Login():
+    """Responsible for logging into the account provided in the settings file"""
     driver.get('https://leetcode.com/accounts/login/')
     time.sleep(5)
     
@@ -22,10 +22,14 @@ def Login():
     time.sleep(3)
     login_but=driver.find_element(by=By.XPATH,value="//button[@id='signin_btn']")
     login_but.click()
-    time.sleep(7)
+    time.sleep(5)
 
 
 def Get_Answers():
+    """ Will Scrape the solution from any question url
+     By clicking on the solutions tab and then clicking on the very first solution.
+      It understands which languages to scrape by scraping the code boxes written on 
+      the solutions tab and based on that it decides which class to scrape from """
     #Click on solution tab
     time.sleep(5)
     element = driver.find_element(by=By.XPATH,value="//div[@class='normal absolute left-0 top-0 whitespace-nowrap font-normal' and text()='Solutions']")
@@ -75,6 +79,7 @@ def Get_Answers():
                 file.write("\n")
 
 def Get_Question():
+    """It scrapes the question from the problem's page"""
     time.sleep(5)
     element= driver.find_element(by=By.XPATH,value="//div[@data-track-load='description_content']")
     with open('Questions.txt','a',encoding='utf-8') as file:
@@ -82,6 +87,7 @@ def Get_Question():
         file.write('\n')
 
 def Get_Urls():
+    """It returns all the urls for questions on any page that groups together questions eg "Arrays"""
     titles=[]
     cleaned_title=[]
     elements = driver.find_elements(by=By.XPATH,value="//td[@label='Title']")
@@ -97,7 +103,7 @@ def Get_Urls():
 
 
 Login()
-driver.get("https://leetcode.com/tag/counting-sort/")
+driver.get("https://leetcode.com/tag/counting-sort/") #Replace the url with the url of the group of questions needed to be scraped
 time.sleep(5)
 cleaned_title = Get_Urls()
 for url in cleaned_title:
