@@ -36,11 +36,19 @@ class CompanyDatabaseHandle(DataBaseHandler):
         return []
 
 class LeetScraper:
+
     def GetProblemLinks (companyName: str ) -> list[str]:
-        pass
+        LeetScraper.driver.get(f"https://leetcode.com/company/{companyName}/")
+        problemLinks = LeetScraper.Get_Urls()
+        return problemLinks
 
     def GetQuestion (link:str) -> str:
-        pass
-
+        LeetScraper.driver.get(link)
+        questions = LeetScraper.Get_Question()
+        return questions
+    
     def GetAnswers (link:str) -> str:
-        pass
+        LeetScraper.driver.get(link)
+        answers = LeetScraper.Get_Answers()
+        return answers
+    
