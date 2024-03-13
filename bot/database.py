@@ -34,3 +34,13 @@ class CompanyDatabaseHandle(DataBaseHandler):
         Get the details of the company asked for.
         """
         return []
+
+class LeetScraper:
+    def GetProblemLinks (companyName: str ) -> list[str]:
+        pass
+
+    def GetQuestion (link:str) -> str:
+        pass
+
+    def GetAnswers (link:str) -> str:
+        pass
