@@ -17,8 +17,9 @@ async def send_message(message, user_message: str):
     """
     try:
         response = handler.QueryHandler.ans_query(user_message)
+        if response != None:
 
-        await message.channel.send(response)
+            await message.channel.send(response)
     
     except Exception as e:
         print(e)

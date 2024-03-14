@@ -1,4 +1,13 @@
 # interface for database
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+from Leetcode import LeetScraper as ls 
+
+
+
 
 class DataBaseHandler:
     """
@@ -38,17 +47,14 @@ class CompanyDatabaseHandle(DataBaseHandler):
 class LeetScraper:
 
     def GetProblemLinks (companyName: str ) -> list[str]:
-        LeetScraper.driver.get(f"https://leetcode.com/company/{companyName}/")
-        problemLinks = LeetScraper.Get_Urls()
-        return problemLinks
+        return ls.get_questions_for_company(companyName)
+    
+    def GetProblemFromTag(tag : str) -> list[str]:
+        return ls.get_questions_for_tags(tag)
 
     def GetQuestion (link:str) -> str:
-        LeetScraper.driver.get(link)
-        questions = LeetScraper.Get_Question()
-        return questions
+        return ls.Get_Question(link)
     
     def GetAnswers (link:str) -> str:
-        LeetScraper.driver.get(link)
-        answers = LeetScraper.Get_Answers()
-        return answers
+        return ls.Get_Answers(link)
     
