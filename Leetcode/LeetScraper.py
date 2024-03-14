@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import time
-import settings
+import Leetcode.settings as settings
 import undetected_chromedriver as uc
 
 #Shows the path where chromedriver is installed
