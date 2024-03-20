@@ -15,20 +15,23 @@ class pyinterface:
         for doc in json_data:
             for key,value in sch_data.items():
                 collection=self.db[key]
-                attr_data=[]
+                attr_data={}
                 for i in doc.keys():
                     if i.lower() in value.keys():
-                        attr_data.append({i.lower():doc[i]})
-                
-                if isinstance(attr_data,list):
-                    collection.insert_many(attr_data)
-                elif isinstance(attr_data,dict):
-                    collection.insert_one(attr_data)
-                else:
-                    print("Invalid Json file format")
+                        attr_data.update({i.lower():doc[i]})
+                ex_entry = collection.find_one(attr_data)
+                if ex_entry==None:
+                    if isinstance(attr_data,list):
+                        collection.insert_many(attr_data)
+                    elif isinstance(attr_data,dict):
+                        collection.insert_one(attr_data)
+                    else:
+                        print("Invalid Json file format")
     def query_select(self):
         for doc in self.db:
             print(doc)
+
+            
 if __name__=="__main__":
     db_name     = "offcampus"
     db_url      = "mongodb+srv://sairaorgb398:Sabari%40123@cluster0.kgww5k3.mongodb.net/"
