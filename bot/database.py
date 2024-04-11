@@ -57,6 +57,7 @@ class LeetScraper:
     
     def GetAnswers (link:str) -> str:
         return ls.Get_Answers(link)
-
-    def UploadAnswer (link: str, code: str) -> str:
-        pass
+        
+    def GetSolutionStats(question_url: str, language: str, solution: str) -> str:
+        """need to fill in here"""
+    
