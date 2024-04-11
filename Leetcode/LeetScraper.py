@@ -6,7 +6,7 @@ import os
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import pyperclip
-import Results
+from .Results import *
 #Shows the path where chromedriver is installed
 s= Service('chromedriver.exe')
 driver=uc.Chrome()
@@ -201,18 +201,18 @@ def Get_Solution_Stats(Question_url:str,Language:str,Solution:str):
                     memory_result +=" "
                 else:
                     memory_result +=c
-            return Results.AcceptedSolution(runtime_result,memory_result)
+            return AcceptedSolution(runtime_result,memory_result)
     except NoSuchElementException:
         pass
     try:
         submission_result=driver.find_element(by=By.XPATH,value="//span[@data-e2e-locator='console-result']").text
         if submission_result =="Time Limit Exceeded":
-            return Results.RejectedSolution("TimeError",submission_result)
+            return RejectedSolution("TimeError",submission_result)
         elif submission_result =="Memory Limit Exceeded":
-            return Results.RejectedSolution("MemoryError",submission_result)
+            return RejectedSolution("MemoryError",submission_result)
         elif submission_result == "Runtime Error":
             error=driver.find_element(by=By.XPATH,value="//div[@class='font-menlo whitespace-pre-wrap break-all text-xs text-red-60 dark:text-red-60']").text
-            return Results.RejectedSolution("RuntimeError",error)
+            return RejectedSolution("RuntimeError",error)
     
     except NoSuchElementException:
         pass

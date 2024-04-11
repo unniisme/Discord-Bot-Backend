@@ -57,4 +57,6 @@ class LeetScraper:
     
     def GetAnswers (link:str) -> str:
         return ls.Get_Answers(link)
-    
+
+    def UploadAnswer (link: str, code: str) -> str:
+        pass
