@@ -59,5 +59,17 @@ class LeetScraper:
         return ls.Get_Answers(link)
         
     def GetSolutionStats(question_url: str, language: str, solution: str) -> str:
-        """need to fill in here"""
-    
+        results=ls.Get_Solution_Stats(question_url,language,solution)
+        res="Solution "
+
+        if results.is_accepted:
+            res+="accepted\nRuntime stats: "
+            res+=str(results.runtime_stat)
+            res+="\nMemory stats: "+str(results.memory_stat)+"\n"
+        
+        else:
+            res+="rejected\nError stats: "
+            res+=str(results.error_type)
+            res+="\nError message: "+str(results.error_message)+"\n"
+
+        return res
